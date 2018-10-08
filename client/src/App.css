@@ -40,3 +40,26 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
   object-fit: scale-down;
   overflow: scroll;
 }
+
+.bg-green{background: #009999}
+
+.bg-purple{background: #563d7c}
+
+.bg-lb{background: #ffffff}
+
+.bg-lyellow{background: #FFD07B}
+footer{border-top:1px solid white}
+header{border-bottom:1px solid white}
+
+.bg-blue{background: #3399ff}
+
+.bg-darkblue{background: #336699}
+
+.bg-yellow{background: #ffcc00}
+
+.bg-orange{background: #cc6633}
+.bg-red{background: #d83b01}
+
+.bg-darkgrey{background: #384d54}
+
+.hand,.card{ cursor: pointer; }

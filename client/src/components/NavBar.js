@@ -14,6 +14,7 @@ class NavBar extends Component {
   }
   render() {
     return (
+      <header>
       <Navbar color="dark" dark expand="md">
        <NavbarBrand href="/"><img src={logo} className="logo" alt="logo"></img></NavbarBrand>
 
@@ -47,6 +48,7 @@ class NavBar extends Component {
          </Nav>
        </Collapse>
       </Navbar>
+      </header>
 )
 }
 }
