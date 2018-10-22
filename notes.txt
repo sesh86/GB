@@ -1,0 +1,28 @@
+Create Course:
+===============
+Rich text in CreateCourse, category, video, live classroom, recorded class room
+FAQ
+Batches
+Watch Demo - Click to see video
+
+New Page:
+=========
+Create Edit Page
+
+Course Page:
+===========
+Collapse -> First Box content is getting hidden
+Logo in course page
+FAQ
+Batches
+Watch Demo - Click to see video
+Enroll -> student form -> Save
+Reviews
+
+Home PAge:
+==========
+Widgets for courses
+Search
+Categories
+Master Courses
+Search box in navbar

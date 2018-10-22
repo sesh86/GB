@@ -15,7 +15,7 @@ class NavBar extends Component {
   render() {
     return (
       <header>
-      <Navbar color="dark" dark expand="md">
+      <Navbar color="darkblue" dark expand="md">
        <NavbarBrand href="/"><img src={logo} className="logo" alt="logo"></img></NavbarBrand>
 
        <NavbarToggler onClick={this.toggle} />

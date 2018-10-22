@@ -41,7 +41,28 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
   overflow: scroll;
 }
 
-.bg-green{background: #009999}
+.bg-body{background: #98AFC7}
+
+.bd-body{border:1px solid #98AFC7;color:#98AFC7}
+.btn-body{background-color:#98AFC7  ;color:white}
+
+
+.bd-purple{border:1px solid #563d7c;color:#563d7c}
+.btn-purple{background-color:#563d7c  ;color:white}
+
+.bd-darkgrey{border:1px solid #38ACEC;color:#384d54}
+.btn-darkgrey{background-color:#384d54  ;color:white}
+
+.bd-darkblue{border:1px solid #336699;color:#336699}
+.btn-darkblue{background-color:#336699  ;color:white}
+
+.bd-blue{border:1px solid #3399ff;color:#3399ff}
+.btn-blue{background-color:#3399ff  ;color:white}
+
+.bd-contrast{border:1px solid #336699;color:#336699}
+.btn-contrast{background-color:white;color:#336699}
+
+.bg-contrast{background: white;color:#336699;border:1px solid #336699}
 
 .bg-purple{background: #563d7c}
 
@@ -51,9 +72,12 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 footer{border-top:1px solid white}
 header{border-bottom:1px solid white}
 
-.bg-blue{background: #3399ff}
 
-.bg-darkblue{background: #336699}
+
+.bg-blue{background: #3399ff}
+.bg-site{background-color:rgba(0,0,0,.03)}
+.bg-darkblue{background: #336699!important;color:white}
+.bg-lgrey{background: #FEFEFE!important;color:white}
 
 .bg-yellow{background: #ffcc00}
 
@@ -63,3 +87,5 @@ header{border-bottom:1px solid white}
 .bg-darkgrey{background: #384d54}
 
 .hand,.card{ cursor: pointer; }
+
+.wrapperClassName {border:1px solid lightgrey}

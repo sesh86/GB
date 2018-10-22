@@ -10,12 +10,16 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import NavBar from './components/NavBar';
 import CarouselComp from './components/Carousel'
 import CourseComp from './components/CourseComp'
+import CreateCourse from './components/CreateCourse';
+
+
 ReactDOM.render(
 <BrowserRouter>
   <div>
     <NavBar/>
     <Route exact path="/" component={CarouselComp}/>
-    <Route exact path="/Course" component={CourseComp}/>
+    <Route exact path="/Course/:course" component={CourseComp}/>
+    <Route exact path="/CreateCourse" component={CreateCourse}/>
   <FooterComp/>
   </div>
 </BrowserRouter>

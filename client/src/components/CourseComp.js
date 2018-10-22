@@ -1,69 +1,93 @@
 import React, { Component } from 'react';
 import {Collapse, Button,Card, CardImg, CardText, CardBody, CardLink,CardHeader,
   CardTitle, CardSubtitle} from 'reactstrap'
+import axios from 'axios';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 class CourseComp extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapse: false };
+    this.state = { course: true,details:false,syllabus:false };
+    axios('http://localhost:8080/getCourse/'+this.props.match.params.course)
+    .then(res=>{console.log(res);this.setState({course:res.data[0]})});
   }
-  toggle=() =>{
-    this.setState({ collapse: !this.state.collapse });
+  toggleCourse=() =>{this.setState({ course: !this.state.course });}
+  toggleDetails=() =>{this.setState({ details: !this.state.details });}
+  toggleSyllabus=() =>{this.setState({ syllabus: !this.state.syllabus });}
+  componentWillMount(){
+
   }
   render() {
+    // var l_course=JSON.stringify(this.state.course[0]);
+    console.log(this.state.course)
+    // l_course=JSON.parse(l_course);
+
       return (
-        <div className="bg-lyellow opacity">
+        <div className="bg-site">
           <div className="container p-5 text-center">
 
-          <Card className="hand" color="dark">
-          <CardHeader onClick={this.toggle}>
-            <CardTitle>  <h5 className="p-1 text-light">Node JS</h5></CardTitle>
+          <Card className="hand">
+          <CardHeader onClick={this.toggleCourse} className="bg-darkblue">
+            <CardTitle>  <span className="p-1 h5">{this.state.course.courseName}</span><span className="float-right">{this.state.course?'-':'+'}</span></CardTitle>
           </CardHeader>
-          <Collapse isOpen={this.state.collapse}>
+          <Collapse isOpen={this.state.course}>
           <CardBody>
             <br/>
             <div className="row">
               <div className="col-md-4">
-                  <div className="bg-info text-center text-light p-3 m-1">
+                  <div className="bd-darkblue text-center p-3 m-1">
                     <b>Where to Start?</b><br/><br/>
-                  <Button color="secondary">Click Here to Watch Demo</Button>
+                  <Button color="darkblue">Watch Demo</Button>
                   </div>
               </div>
               <div className="col-md-4">
-                  <div className="bg-green text-center text-light p-3 m-1">
+                  <div className="bd-contrast text-center p-3 m-1">
                     <b>Learn in Live Classroom</b><br/><br/>
-                  <Button color="danger">Enroll Now</Button>
+                  <Button color="darkblue">Enroll Now</Button>
                   </div>
               </div>
               <div className="col-md-4">
-                  <div className="bg-darkgrey text-center text-light p-3 m-1">
+                  <div className="bd-darkblue text-center p-3 m-1">
                     <b>Recorded Classes</b><br/>
                   <br/>
-                <Button color="info">Enroll Now</Button>
+                <Button color="darkblue">Enroll Now</Button>
                   </div>
               </div>
             </div>
             <br/>
             <div className="row">
-              <div className="col-md-3"><div className="text-light bg-darkblue m-1 p-3"><b>Course Duration:</b><br/>30 Days</div></div>
-              <div className="col-md-3"><div className="text-light bg-secondary m-1 p-3"><b>Learning Material:</b><br/>Supplied</div></div>
-            <div className="col-md-3"><div className="text-light bg-purple m-1 p-3"><b>Live Project:</b><br/>30 Days</div></div>
-              <div className="col-md-3"><div className="text-light bg-danger m-1 p-3"><b>Pre Requisites:</b><br/>30 Days</div></div>
+              <div className="col-md-3"><div className=" bg-darkblue m-1 p-3"><b>Course Duration:</b><br/>{this.state.course.duration} Days</div></div>
+              <div className="col-md-3"><div className="bg-contrast m-1 p-3"><b>Learning Material:</b><br/>{this.state.course.lms}</div></div>
+            <div className="col-md-3"><div className="bg-darkblue m-1 p-3"><b>Live Project:</b><br/>{this.state.course.liveProject}</div></div>
+              <div className="col-md-3"><div className="bg-contrast m-1 p-3"><b>Pre Requisites:</b><br/>{this.state.course.preRequisites}</div></div>
             </div>
 
             </CardBody>
             </Collapse>
             </Card>
-            <br/><br/>
           <Card>
-            <CardHeader>
-              <CardTitle>Course Details</CardTitle>
+
+            <CardHeader onClick={this.toggleDetails} className="bg-darkblue">
+              <CardTitle>Course Details<span className="float-right">{this.state.details?'-':'+'}</span></CardTitle>
             </CardHeader>
-            <CardBody className="text-justify">
-              Node.js is an open-source, cross-platform JavaScript run-time environment that executes JavaScript code outside of a browser. Historically, JavaScript was used primarily for client-side scripting, in which scripts written in JavaScript are embedded in a webpage's HTML and run client-side by a JavaScript engine in the user's web browser. Node.js lets developers use JavaScript to write Command Line tools and for server-side scripting—running scripts server-side to produce dynamic web page content before the page is sent to the user's web browser. Consequently, Node.js represents a "JavaScript everywhere" paradigm,[6] unifying web application development around a single programming language, rather than different languages for server side and client side scripts.
+            <Collapse isOpen={this.state.details}>
+            <CardBody className="text-justify"><div dangerouslySetInnerHTML={{ __html: this.state.course.courseDetails}} /></CardBody>
+            </Collapse>
+          </Card>
+          <Card>
+
+            <CardHeader onClick={this.toggleSyllabus} className="bg-darkblue">
+              <CardTitle>Course Syllabus<span className="float-right">{this.state.syllabus?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.syllabus}>
+            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: this.state.course.syllabus}} >
+
             </CardBody>
-            </Card>
+            </Collapse>
+          </Card>
           </div>
+
         </div>)
       }
 }

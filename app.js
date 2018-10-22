@@ -1,8 +1,88 @@
+var mongoose=require('mongoose');
+mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
+
+var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String});
+
+
+/*
+Cat.find({name:/^dann/},function (err, kittens) {
+  if (err) return console.error(err);
+  for(i=0;i<kittens.length;i++)
+  console.log(kittens[i].name);
+});
+*/
+
 const _app=require('./config.js')
 const express=require('express')
 const jwt = require('jsonwebtoken');
+// var bodyParser = require('body-parser');
 app=express();
 
+const fileUpload = require('express-fileupload');
+
+// default options
+app.use(fileUpload());
+
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+var path = require('path');
+app.use('/static',express.static(path.resolve('./public')));
+
+app.post('/upload', (req, res, next) => {
+
+  let fileName=req.files.file.name
+  let imageFile = req.files.file;
+
+  imageFile.mv(`${__dirname}/public/img/${fileName}`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
+  }
+
+  var l_course = new course(JSON.parse(req.body.courseJSON));
+
+  l_course.save(function (err) {
+    console.log('saved');
+    res.send('Course Added Succesfully');
+  });
+
+  });
+
+})
+app.get('/getCourses',(req,res)=>{
+  course.find(function (err, data) {
+    if (err) return console.error(err);
+      res.send(data);
+  });
+});
+
+app.get('/getCourse/:course',(req,res)=>{
+  course.find({courseName:req.params.course},function (err, data) {
+    if (err) return console.error(err);
+      // res.writeHead(200, {'Content-Type': 'text/plain'});
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+      res.send(data);
+  });
+});
+
+app.get('/db',(req,res)=>{
+
+  var l_course = new course({ name: 'Node JS',syllabus:'Syllabus',details:'Details' });
+
+  // l_course.save(function (err) {
+  //   console.log('saved');
+  //   res.send(err);
+  // });
+  // find/querying the document
+  course.find(function (err, data) {
+    if (err) return console.error(err);
+      res.send(data);
+  });
+
+}
+
+
+)
 app.get('/',(req,res)=>{
   var user={id:1,user:'sesh'}
   jwt.sign(user,'secret',
