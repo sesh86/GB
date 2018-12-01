@@ -1,7 +1,8 @@
 var mongoose=require('mongoose');
+var cors=require('cors');
 mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 
-var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String});
+var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String});
 
 
 /*
@@ -29,6 +30,35 @@ app.use(fileUpload());
 var path = require('path');
 app.use('/static',express.static(path.resolve('./public')));
 
+app.post('/getCategories',cors(),(req,res)=>{
+  course.distinct('category',function (err, data) {
+    if (err) return console.error(err);
+      res.status(200).send(data);
+  });
+});
+
+app.post('/getCourses',cors(),(req,res)=>{
+  course.distinct('courseName',function (err, data) {
+    if (err) return console.error(err);
+      res.status(200).send(data);
+  });
+});
+
+app.post('/getWidget',cors(),(req,res)=>{
+  course.find({},{courseName:1,logo:2},function (err, data) {
+    if (err) return console.error(err);
+      res.status(200).send(data);
+  });
+});
+
+app.post('/update', (req, res, next) => {
+  var l_course = JSON.parse(req.body.courseJSON);
+  course.updateOne({courseName:l_course.courseName},l_course,function (err) {
+      if (err){return console.error(err);}
+      res.send('Course Updated Succesfully');
+  })
+})
+
 app.post('/upload', (req, res, next) => {
 
   let fileName=req.files.file.name
@@ -50,9 +80,16 @@ app.post('/upload', (req, res, next) => {
 
 })
 app.get('/getCourses',(req,res)=>{
-  course.find(function (err, data) {
+  course.find({},{courseName:1,category:2},function (err, data) {
     if (err) return console.error(err);
       res.send(data);
+  });
+});
+
+app.get('/delCourse/:id',(req,res)=>{
+  course.remove({_id:req.params.id},function (err, data) {
+    if (err) return console.error(err);
+      res.send('Succesfully deleted');
   });
 });
 
@@ -92,6 +129,11 @@ app.get('/',(req,res)=>{
     res.status(200).json(token);
   })
 });
+
+app.get('/api/:token',(req,res)=>{
+  var decoded = jwt.decode(req.params.token);
+  res.send(decoded);
+})
 
 app.get('/api/protected', ensureToken, (req, res) =>{
 

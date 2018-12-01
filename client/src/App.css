@@ -1,11 +1,20 @@
 .App {
   text-align: center;
 }
+.category{
+    border-radius: 10px;
+    border: 1px solid;
+    padding: 5px;
+    margin:5px;
+}
+.search{min-height:300px;padding:10px;background-color: rgba(0,0,0,.03)}
 .logo{width:250px}
+.widget{width:190px;margin: 10px}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
 }
+.text{color: #336699 !important;}
 .banner{width:100%}
 .nav-link{color:white}
 pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;}
@@ -55,7 +64,8 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 
 .bd-darkblue{border:1px solid #336699;color:#336699}
 .btn-darkblue{background-color:#336699  ;color:white}
-
+.btn-darkblue:hover{background-color:white  ;color:#336699;border:1px solid #336699}
+.body{min-height:400px}
 .bd-blue{border:1px solid #3399ff;color:#3399ff}
 .btn-blue{background-color:#3399ff  ;color:white}
 
@@ -70,10 +80,9 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 
 .bg-lyellow{background: #FFD07B}
 footer{border-top:1px solid white}
-header{border-bottom:1px solid white}
 
-
-
+.hash{color:#3399ff;font-weight: bold}
+.text-left{text-align: left;}
 .bg-blue{background: #3399ff}
 .bg-site{background-color:rgba(0,0,0,.03)}
 .bg-darkblue{background: #336699!important;color:white}
@@ -89,3 +98,13 @@ header{border-bottom:1px solid white}
 .hand,.card{ cursor: pointer; }
 
 .wrapperClassName {border:1px solid lightgrey}
+.link,
+a,
+a label {
+    cursor: pointer;
+}
+
+.hstrike:hover{text-decoration: line-through !important}
+.active{    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;}

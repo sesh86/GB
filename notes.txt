@@ -1,25 +1,33 @@
 Create Course:
 ===============
-Rich text in CreateCourse, category, video, live classroom, recorded class room
-FAQ
-Batches
-Watch Demo - Click to see video
+Rich text in CreateCourse,  - done
+category, - done
+video - not done
+, live classroom, recorded class room - done
+FAQ - done
+Batches - done
+Watch Demo - Click to see video - not done
 
 New Page:
 =========
-Create Edit Page
+Create Edit Page - done
 
 Course Page:
 ===========
-Collapse -> First Box content is getting hidden
-Logo in course page
-FAQ
-Batches
-Watch Demo - Click to see video
-Enroll -> student form -> Save
-Reviews
+Collapse -> First Box content is getting hidden - done
+Logo in course page - done
+FAQ - done
+Batches - done
+Watch Demo - Click to see video - not done
+Enroll -> student form -> Save - not done
+Reviews - done
 
-Home PAge:
+Defect2:
+1)Access to XMLHttpRequest at 'http://localhost:8080/upload' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+2) add redux
+
+
+Home Page:
 ==========
 Widgets for courses
 Search

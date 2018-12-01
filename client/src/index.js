@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import CarouselComp from './components/Carousel'
 import CourseComp from './components/CourseComp'
 import CreateCourse from './components/CreateCourse';
+import CourseList from './components/CourseList';
 
 
 ReactDOM.render(
@@ -20,6 +21,8 @@ ReactDOM.render(
     <Route exact path="/" component={CarouselComp}/>
     <Route exact path="/Course/:course" component={CourseComp}/>
     <Route exact path="/CreateCourse" component={CreateCourse}/>
+    <Route exact path="/UpdateCourse/:param" component={CreateCourse}/>
+    <Route exact path="/CourseList" component={CourseList}/>
   <FooterComp/>
   </div>
 </BrowserRouter>

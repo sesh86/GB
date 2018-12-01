@@ -8,13 +8,16 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 class CourseComp extends Component {
   constructor(props) {
     super(props);
-    this.state = { course: true,details:false,syllabus:false };
-    axios('http://localhost:8080/getCourse/'+this.props.match.params.course)
+    this.state = { course: true,title:true,details:false,syllabus:false,FAQ:false,batch:false,reviews:false };
+    axios('/getCourse/'+this.props.match.params.course)
     .then(res=>{console.log(res);this.setState({course:res.data[0]})});
   }
-  toggleCourse=() =>{this.setState({ course: !this.state.course });}
+  toggleCourse=() =>{this.setState({ title: !this.state.title });}
   toggleDetails=() =>{this.setState({ details: !this.state.details });}
   toggleSyllabus=() =>{this.setState({ syllabus: !this.state.syllabus });}
+  toggleBatch=() =>{this.setState({ batch: !this.state.batch });}
+  toggleFAQ=() =>{this.setState({ FAQ: !this.state.FAQ });}
+  toggleReviews=() =>{this.setState({ reviews: !this.state.reviews });}
   componentWillMount(){
 
   }
@@ -22,19 +25,25 @@ class CourseComp extends Component {
     // var l_course=JSON.stringify(this.state.course[0]);
     console.log(this.state.course)
     // l_course=JSON.parse(l_course);
-
+      if(!this.state.course) return (<div className="bg-site">Loading...</div>);
       return (
         <div className="bg-site">
-          <div className="container p-5 text-center">
 
+          <div className="container p-5 text-center">
+          <div className="text-left hash"><span className="pr-1">{this.state.course.category}</span>><span className="pl-1">{this.state.course.courseName}</span></div>
+          <br/>
           <Card className="hand">
           <CardHeader onClick={this.toggleCourse} className="bg-darkblue">
-            <CardTitle>  <span className="p-1 h5">{this.state.course.courseName}</span><span className="float-right">{this.state.course?'-':'+'}</span></CardTitle>
+            <CardTitle>  <span className="p-1 h5">{this.state.course.courseName}</span><span className="float-right">{this.state.title?'-':'+'}</span></CardTitle>
           </CardHeader>
-          <Collapse isOpen={this.state.course}>
+          <Collapse isOpen={this.state.title}>
           <CardBody>
             <br/>
+
             <div className="row">
+            <div className="col-md-4">
+              <div><img src={'http://localhost:8080'+this.state.course.logo} height="150"/></div>
+            </div>
               <div className="col-md-4">
                   <div className="bd-darkblue text-center p-3 m-1">
                     <b>Where to Start?</b><br/><br/>
@@ -45,13 +54,6 @@ class CourseComp extends Component {
                   <div className="bd-contrast text-center p-3 m-1">
                     <b>Learn in Live Classroom</b><br/><br/>
                   <Button color="darkblue">Enroll Now</Button>
-                  </div>
-              </div>
-              <div className="col-md-4">
-                  <div className="bd-darkblue text-center p-3 m-1">
-                    <b>Recorded Classes</b><br/>
-                  <br/>
-                <Button color="darkblue">Enroll Now</Button>
                   </div>
               </div>
             </div>
@@ -83,6 +85,33 @@ class CourseComp extends Component {
             <Collapse isOpen={this.state.syllabus}>
             <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: this.state.course.syllabus}} >
 
+            </CardBody>
+            </Collapse>
+          </Card>
+          <Card>
+            <CardHeader onClick={this.toggleBatch} className="bg-darkblue">
+              <CardTitle>Batch<span className="float-right">{this.state.batch?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.batch}>
+            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: this.state.course.batch}} >
+            </CardBody>
+            </Collapse>
+          </Card>
+          <Card>
+            <CardHeader onClick={this.toggleFAQ} className="bg-darkblue">
+              <CardTitle>FAQ<span className="float-right">{this.state.FAQ?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.FAQ}>
+            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: this.state.course.FAQ}} >
+            </CardBody>
+            </Collapse>
+          </Card>
+          <Card>
+            <CardHeader onClick={this.toggleReviews} className="bg-darkblue">
+              <CardTitle>Reviews<span className="float-right">{this.state.reviews?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.reviews}>
+            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: this.state.course.reviews}} >
             </CardBody>
             </Collapse>
           </Card>
