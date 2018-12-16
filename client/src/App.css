@@ -1,3 +1,25 @@
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-image: none;
+}
+.carousel-control-next-icon:after
+{
+  content: '>';
+  font-size: 55px;
+  color: red;
+}
+
+.carousel-control-prev-icon:after {
+  content: '<';
+  font-size: 55px;
+  color: red;
+}
 .App {
   text-align: center;
 }
@@ -8,8 +30,9 @@
     margin:5px;
 }
 .search{min-height:300px;padding:10px;background-color: rgba(0,0,0,.03)}
+.cat{min-height:500px;padding:10px;vertical-align: middle;}
 .logo{width:250px}
-.widget{width:190px;margin: 10px}
+.widget{width:240px;margin: 5px}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -45,7 +68,6 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 
 .carousel .carousel-inner img {
   width: 100%;
-  height: 20em;
   object-fit: scale-down;
   overflow: scroll;
 }
@@ -54,10 +76,10 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 
 .bd-body{border:1px solid #98AFC7;color:#98AFC7}
 .btn-body{background-color:#98AFC7  ;color:white}
-
-
+.strike{text-decoration: line-through;}
+.bg-carousel{background-color: white!important}
 .bd-purple{border:1px solid #563d7c;color:#563d7c}
-.btn-purple{background-color:#563d7c  ;color:white}
+.btn-purple{background-color:#563d7c;color:white}
 
 .bd-darkgrey{border:1px solid #38ACEC;color:#384d54}
 .btn-darkgrey{background-color:#384d54  ;color:white}
@@ -77,6 +99,10 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 .bg-purple{background: #563d7c}
 
 .bg-lb{background: #ffffff}
+.bg-nb{background: none!important}
+
+.fa_icon{font-size: 30px}
+.loading{height: 500px}
 
 .bg-lyellow{background: #FFD07B}
 footer{border-top:1px solid white}
@@ -95,16 +121,14 @@ footer{border-top:1px solid white}
 
 .bg-darkgrey{background: #384d54}
 
-.hand,.card{ cursor: pointer; }
+.btn,.hand,.card-header{ cursor: pointer; }
 
 .wrapperClassName {border:1px solid lightgrey}
 .link,
-a,
-a label {
+a,a label {
     cursor: pointer;
 }
+a:hover{text-decoration:none}
 
 .hstrike:hover{text-decoration: line-through !important}
-.active{    color: #fff;
-    background-color: #286090;
-    border-color: #204d74;}
+.active{color: #fff;background-color: #286090;border-color: #204d74;}

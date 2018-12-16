@@ -1,15 +1,17 @@
 import React, {Component } from 'react';
 import { NavLink} from 'react-router-dom';
 import axios from 'axios';
-class CourseList extends Component {
+class Enquiries extends Component {
     constructor(props) {
       super(props);
       this.state = {courses:''}
-      axios('/getCourses')
-      .then(res=>{this.setState({courses:res.data})})
+      axios.post('/getEnquiries')
+      .then(res=>{
+        this.setState({courses:res.data})})
     }
   removeCourse(cid){
-    axios('/delCourse/'+cid)
+    return false;
+    axios.post('/delEnquiry/'+cid)
     .then(res=>{
       let courses=this.state.courses;
       this.setState({courses:courses.filter(x=>x._id!==cid)})
@@ -31,22 +33,22 @@ class CourseList extends Component {
       <div className="container body">
         <h4 className="col-sm-10 col-md-4 text mx-auto">Click on the course to Edit</h4>
         <br/>
-        <ul className="list-group-mb5 text-left col-sm-10 col-md-4 mx-auto">
-        {courses?
-          courses.map(item => (
-            <li className="list-group-item link" key={item.courseName}>
-            <div className="row">
-              <div className="col-10"><NavLink title={"Check "+item.courseName} className="text" to={"/UpdateCourse/"+item.courseName}>{item.courseName}</NavLink></div>
-              <div className="col-2"><NavLink className="text bg-nb" to="/CourseList" onClick={() => { this.removeCourse(item._id)}}>X</NavLink></div>
-              </div>
-            </li>
-          ))
-          :'Loading...'}
-        </ul>
+        <table className="table table-striped">
+        <thead><tr><td>Name</td><td>Email</td><td>Country</td><td>Mobile</td><td>Course Interested</td><td>Delete</td></tr></thead>
+        <tbody>
+          {
+            courses?
+            courses.map(item => (
+                <tr><td>{item.name}</td><td>{item.email}</td><td>{item.country}</td><td>{item.mobile}</td><td>{item.course}</td><td><NavLink className="text bg-nb" to="/Enquiries" onClick={() => { this.removeCourse(item._id)}}>X</NavLink></td></tr>
+            ))
+            :'Loading...'
+          }
+        </tbody>
+        </table>
       </div>
 
     )
   }
 }
 
-export default CourseList;
+export default Enquiries;

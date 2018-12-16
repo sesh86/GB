@@ -1,9 +1,9 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import FooterComp from './components/FooterComp';
 import {BrowserRouter, Route} from 'react-router-dom'
@@ -12,6 +12,10 @@ import CarouselComp from './components/Carousel'
 import CourseComp from './components/CourseComp'
 import CreateCourse from './components/CreateCourse';
 import CourseList from './components/CourseList';
+import Category from './components/Category';
+import Login from './components/Login';
+import Enquiries from './components/Enquiries';
+
 
 
 ReactDOM.render(
@@ -23,6 +27,9 @@ ReactDOM.render(
     <Route exact path="/CreateCourse" component={CreateCourse}/>
     <Route exact path="/UpdateCourse/:param" component={CreateCourse}/>
     <Route exact path="/CourseList" component={CourseList}/>
+    <Route exact path="/Category/:cat" component={Category}/>
+    <Route exact path="/Login" component={Login}/>
+    <Route exact path="/Enquiries" component={Enquiries}/>
   <FooterComp/>
   </div>
 </BrowserRouter>

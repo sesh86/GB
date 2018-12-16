@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/sesh86/GB#readme",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
     "cors": "^2.8.5",

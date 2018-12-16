@@ -1,6 +1,7 @@
+import {NavLink as NL} from 'react-router-dom';
 import React, { Component } from 'react';
 import logo from '../img/itrain.png';
-import {UncontrolledDropdown,Nav,NavbarBrand,Navbar,NavbarToggler,Collapse,NavItem,NavLink,DropdownToggle,DropdownItem,DropdownMenu} from 'reactstrap'
+import {UncontrolledDropdown,Nav,Navbar,NavbarToggler,Collapse,NavItem,NavLink,DropdownToggle,DropdownItem,DropdownMenu} from 'reactstrap'
 class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -16,10 +17,8 @@ class NavBar extends Component {
     return (
       <header>
       <Navbar color="darkblue" dark expand="md">
-       <NavbarBrand href="/"><img src={logo} className="logo" alt="logo"></img></NavbarBrand>
-
+       <NL to="/"><img src={logo} className="logo" alt="logo"></img></NL>
        <NavbarToggler onClick={this.toggle} />
-
        <Collapse isOpen={this.state.isOpen} navbar>
          <Nav className="ml-auto" navbar>
            <NavItem>
