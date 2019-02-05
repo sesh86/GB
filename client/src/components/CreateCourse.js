@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import Authenticate from './Authenticate';
 import {Input} from 'reactstrap'
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -9,9 +10,7 @@ import draftToHtml from 'draftjs-to-html';
 class CreateCourse extends Component {
   constructor(props) {
     super(props);
-
-
-
+    Authenticate(this);
     this.state = {
       editorState : EditorState.createEmpty(),
       editorState1: EditorState.createEmpty(),
@@ -108,8 +107,10 @@ class CreateCourse extends Component {
           Course Name<Input type="text" name="courseName"  className="form-control" defaultValue={this.state.course?this.state.course.courseName:''}/>
           Category   <Input type="text" name="category"    className="form-control" defaultValue={this.state.course?this.state.course.category:''}/>
           Demo URL   <Input type="text" name="demo"    className="form-control" defaultValue={this.state.course?this.state.course.demo:''}/>
-        Course Fee   <Input type="text" name="fee"    className="form-control" defaultValue={this.state.course?this.state.course.fee:''}/>
-      Discounted Fee   <Input type="text" name="disc"    className="form-control" defaultValue={this.state.course?this.state.course.disc:''}/>
+        Title   <Input type="text" name="title"    className="form-control" defaultValue={this.state.course?this.state.course.title:''}/>
+      Keywords   <Input type="text" name="keywords"    className="form-control" defaultValue={this.state.course?this.state.course.keywords:''}/>
+      Course Fee   <Input type="number" name="fee"    className="form-control" defaultValue={this.state.course?this.state.course.fee:''}/>
+    Discounted Fee   <Input type="number" name="disc"    className="form-control" defaultValue={this.state.course?this.state.course.disc:''}/>
           Course Details
                       <Editor name="courseRich"
                       toolbarClassName="toolbarClassName"

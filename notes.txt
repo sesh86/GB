@@ -2,11 +2,11 @@ Create Course:
 ===============
 Rich text in CreateCourse,  - done
 category, - done
-video - not done
+video - done
 , live classroom, recorded class room - done
 FAQ - done
 Batches - done
-Watch Demo - Click to see video - not done
+Watch Demo - Click to see video -  done
 
 New Page:
 =========
@@ -54,3 +54,34 @@ create User - details in create user
 login using google, fb, LinkedIn
 
 onhover - contents on widget
+
+Defects:
+=========
+Hardcoded IP Address - fixed
+[0] (node:291744) DeprecationWarning: collection.remove is deprecated. Use deleteOne, deleteMany, or bulkWrite instead - Fixed
+NavLink in CourseList - delete thing
+toggle for enquiry - fixed
+
+Pending:
+========
+role usage in app - done
+create User - done
+google login
+logo invisible issue
+active in navbar
+payment gateway
+Reviews
+FAQ
+common discounts
+related courses widget
+last viewed
+iframe youtube controls
+enquiry at bottom
+web scrapping
+heroku
+pagination for enquiries
+indexing/using _id for delete/display queries
+carousel >
+countries -> currency -> get local
+
+batch date defect 

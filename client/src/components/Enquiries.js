@@ -1,54 +1,49 @@
+
 import React, {Component } from 'react';
-import { NavLink} from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux'
+import {mapDispatchEnquiries} from '../reducers/actions'
+import Authenticate from './Authenticate';
+
 class Enquiries extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {courses:''}
-      axios.post('/getEnquiries')
-      .then(res=>{
-        this.setState({courses:res.data})})
-    }
-  removeCourse(cid){
-    return false;
-    axios.post('/delEnquiry/'+cid)
-    .then(res=>{
-      let courses=this.state.courses;
-      this.setState({courses:courses.filter(x=>x._id!==cid)})
-  });
-}
+
+  constructor(props) {
+    super(props);
+    Authenticate(this);
+  }
+
+  componentDidMount(){this.props.updEnquiries();}
+
   render() {
-    let courses=this.state.courses;
-    let l_categories={};
-    if(courses){
-      courses.map(function(course){
-        if(l_categories[course.category]===undefined){l_categories[course.category]=[];}
-        var temp={};temp[course.courseName]=course._id
-        l_categories[course.category].push(temp);
+    let enquiries=this.props.state.enquiries,l_categories={};
+    if(enquiries){
+      enquiries.map(function(enquiries){
+        if(l_categories[enquiries.category]===undefined){l_categories[enquiries.category]=[];}
+        var temp={};temp[enquiries.enquiriesName]=enquiries._id
+        l_categories[enquiries.category].push(temp);
         return 0;
       });
     }
 
     return(
       <div className="container body">
-        <h4 className="col-sm-10 col-md-4 text mx-auto">Click on the course to Edit</h4>
+        <h4 className="col-sm-10 col-md-4 text mx-auto">Click on the enquiries to Edit</h4>
         <br/>
         <table className="table table-striped">
         <thead><tr><td>Name</td><td>Email</td><td>Country</td><td>Mobile</td><td>Course Interested</td><td>Delete</td></tr></thead>
         <tbody>
           {
-            courses?
-            courses.map(item => (
-                <tr><td>{item.name}</td><td>{item.email}</td><td>{item.country}</td><td>{item.mobile}</td><td>{item.course}</td><td><NavLink className="text bg-nb" to="/Enquiries" onClick={() => { this.removeCourse(item._id)}}>X</NavLink></td></tr>
+            enquiries?
+            enquiries.map((enquiries,index) => (
+                <tr key={index}><td>{enquiries.name}</td><td>{enquiries.email}</td><td>{enquiries.country}</td><td>{enquiries.mobile}</td><td>{enquiries.course}</td><td><span className="text bg-nb hand" onClick={() => { this.props.delEnquiries(enquiries._id)}}>X</span></td></tr>
             ))
             :'Loading...'
           }
         </tbody>
         </table>
       </div>
-
     )
   }
 }
+const mapStateToProps = (state) => {return {state:state}}
 
-export default Enquiries;
+export default connect(mapStateToProps,mapDispatchEnquiries)(Enquiries);

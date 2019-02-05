@@ -30,6 +30,7 @@
     "google-trends-api": "^4.7.0",
     "json2xls": "^0.1.2",
     "jsonwebtoken": "^8.3.0",
+    "money-converter": "^1.0.3",
     "mongoose": "^5.3.4",
     "nodemon": "^1.18.4",
     "passport": "^0.4.0",

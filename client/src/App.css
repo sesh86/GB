@@ -15,6 +15,9 @@
   color: red;
 }
 
+.input{width:100%}
+.dropdown-item .active{color:#336699;background-color:white}
+
 .carousel-control-prev-icon:after {
   content: '<';
   font-size: 55px;
@@ -82,10 +85,10 @@ pre{    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "O
 .btn-purple{background-color:#563d7c;color:white}
 
 .bd-darkgrey{border:1px solid #38ACEC;color:#384d54}
-.btn-darkgrey{background-color:#384d54  ;color:white}
+.btn-darkgrey{background-color:#384d54!important;color:white!important}
 
 .bd-darkblue{border:1px solid #336699;color:#336699}
-.btn-darkblue{background-color:#336699  ;color:white}
+.btn-darkblue {background-color: #336699!important;color: white!important;}
 .btn-darkblue:hover{background-color:white  ;color:#336699;border:1px solid #336699}
 .body{min-height:400px}
 .bd-blue{border:1px solid #3399ff;color:#3399ff}

@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Input,Alert} from 'reactstrap'
 import { connect } from 'react-redux'
-import {mapDispatchLogin} from '../reducers/actions'
+import {mapDispatchUsers} from '../reducers/actions'
 
-class Login extends Component {
+class CreateUser extends Component {
   constructor(props) {
     super(props);
     this.state = {alert:''};
@@ -14,33 +14,18 @@ class Login extends Component {
   onSubmit=(ev)=> {
     ev.preventDefault();
     let courseJSON={}
-    let currentComponent = this;
-
-
     for(let i in ev.target.elements){
       if(ev.target.elements[i].value!==undefined && ev.target.elements[i].value!=="")
         courseJSON[ev.target.elements[i].name]=ev.target.elements[i].value;
     }
+    courseJSON['role']=1;
     var data = new FormData();
     // data.append('filename', this.fileName.value);
     data.append('courseJSON',JSON.stringify(courseJSON));
 
-      axios.post('/login', data)
+      axios.post('/createUser', data)
         .then(function (response) {
-          if(response.data!=='User Name/Password Incorrect'){
-            localStorage.setItem('token', response.data);
-            currentComponent.props.login()
-            // this.props.history.goBack
-            // console.log(currentComponent.props.history)
-
-            if(document.referrer.indexOf('localhost')>-1)
-              currentComponent.props.history.goBack()
-            else
-              currentComponent.props.history.push('/')
-            // currentComponent.props.history.push(currentComponent.props.history.goBack);
-          }
-          else
-            currentComponent.setState({alert:response.data});
+            console.log(response.data)
           }
         )
         .catch(function (error) {
@@ -50,16 +35,25 @@ class Login extends Component {
   }
   render() {
     // if(!this.state.course) return <div className="body container">Loading...</div>;
-
     return (
       <div className="container cat">
         <br/>
         <br/>
-        <h1>Login</h1>
+        <h1>Create User</h1>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-          User Name<Input type="text" name="email" required className="form-control"/>
+          Email<Input type="text" name="email" required className="form-control"/>
           Password   <Input type="Password" name="password"  required  className="form-control"/>
+          Confirm Password   <Input type="Password" name="confirmPassword"  required  className="form-control"/>
+          Gender   <Input type="text" name="gender"  required  className="form-control"/>
+          Country <select name="country" className="form-control">
+          <option></option>
+          {this.props.state.countries?this.props.state.countries.map((country,index) =>(
+            <option key={index}>{country.name}</option>
+          )):''}
+          </select>
+          Mobile   <Input type="number" name="mobile"  required  className="form-control"/>
+          Course Interested   <Input type="text" name="courseIntersted"  required  className="form-control"/>
           <br/>
           <Alert isOpen={this.state.alert} color="danger">{this.state.alert}</Alert>
           <button className="form-control btn btn-darkblue">Login</button>
@@ -72,4 +66,4 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {return {state:state}}
 
-export default connect(mapStateToProps,mapDispatchLogin)(Login);
+export default connect(mapStateToProps,mapDispatchUsers)(CreateUser);

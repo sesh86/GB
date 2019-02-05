@@ -1,22 +1,18 @@
 import React, {Component } from 'react';
 import { NavLink} from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux'
+import {mapDispatchCourseList} from '../reducers/actions'
+import Authenticate from './Authenticate';
+
 class CourseList extends Component {
     constructor(props) {
       super(props);
-      this.state = {courses:''}
-      axios('/getCourses')
-      .then(res=>{this.setState({courses:res.data})})
+      Authenticate(this);
+      this.props.getCourses();
     }
-  removeCourse(cid){
-    axios('/delCourse/'+cid)
-    .then(res=>{
-      let courses=this.state.courses;
-      this.setState({courses:courses.filter(x=>x._id!==cid)})
-  });
-}
+
   render() {
-    let courses=this.state.courses;
+    let courses=this.props.state.courses;
     let l_categories={};
     if(courses){
       courses.map(function(course){
@@ -37,7 +33,7 @@ class CourseList extends Component {
             <li className="list-group-item link" key={item.courseName}>
             <div className="row">
               <div className="col-10"><NavLink title={"Check "+item.courseName} className="text" to={"/UpdateCourse/"+item.courseName}>{item.courseName}</NavLink></div>
-              <div className="col-2"><NavLink className="text bg-nb" to="/CourseList" onClick={() => { this.removeCourse(item._id)}}>X</NavLink></div>
+              <div className="col-2"><span className="text bg-nb" onClick={() => { this.props.delCourse(item._id)}}>X</span></div>
               </div>
             </li>
           ))
@@ -49,4 +45,6 @@ class CourseList extends Component {
   }
 }
 
-export default CourseList;
+const mapStateToProps = (state) => {return {state:state}}
+
+export default connect(mapStateToProps,mapDispatchCourseList)(CourseList);

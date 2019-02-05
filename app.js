@@ -2,10 +2,11 @@ var mongoose=require('mongoose');
 var cors=require('cors');
 mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 
-var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String,demo:String,fee:Number,disc:Number});
-let user = mongoose.model('users', { email: String, password:String, gender:String,  mobile:String, courseIntersted:String,role:Number });
-let countries = mongoose.model('countries', { name:String,code:String});
-let enquiry = mongoose.model('enquiry', { name:String,email: String, country:String,mobile:String, course:String});
+var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String,demo:String,fee:Number,disc:Number,title:String,keywords:String});
+let user = mongoose.model('users', { email: String, password:String, gender:String,  mobile:String, courseIntersted:String,role:Number,country:String });
+let countries = mongoose.model('countries', { Country:String,ISO:String,Phone:String,Currency:String});
+let enquiry = mongoose.model('enquiry', { name:String,email: String, country:String,mobile:String, course:String,assignedTo:String,comments:Object,followup:Date,batch:String,location:String,planToStart:String});
+
 
 /*
 Cat.find({name:/^dann/},function (err, kittens) {
@@ -49,7 +50,7 @@ app.post('/getCategory/:cat',cors(),(req,res)=>{
 });
 
 app.post('/getCourses',cors(),(req,res)=>{
-  course.distinct('courseName',function (err, data) {
+  course.find({},{courseName:1,category:2},function (err, data) {
     if (err) return console.error(err);
       res.status(200).send(data);
   });
@@ -70,12 +71,23 @@ app.post('/update',cors(), (req, res, next) => {
   })
 })
 
+app.post('/getEnquiry/:mobile',cors(), (req, res, next) => {
+  enquiry.find({mobile:req.params.mobile},function (err, data) {
+    if (err) return console.error(err);
+      res.send(data);
+  });
+});
+app.get('/getEnquiry/:mobile',cors(), (req, res, next) => {
+  enquiry.find({mobile:req.params.mobile},function (err, data) {
+    if (err) return console.error(err);
+      res.send(data);
+  });
+});
+
+
 app.post('/quickEnquiry',cors(), (req, res, next) => {
 
-  console.log(req.body.enquiry);
   let l_enquiry = new enquiry(JSON.parse(req.body.enquiry));
-  console.log(req.body);
-  // res.send('test');
   l_enquiry.save(function (err) {
     console.log('saved');
     res.send('Enquiry Sent Succesfully');
@@ -90,15 +102,13 @@ app.post('/getEnquiries',cors(),(req,res)=>{
 });
 
 app.post('/delEnquiry/:id',(req,res)=>{
-  enquiry.remove({_id:req.params.id},function (err, data) {
+  enquiry.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
 });
 
 app.get('/insCountries/:cc', (req, res, next) => {
-  console.log(req.query.cc)
-  // res.send('stop');
   let l_countries = JSON.parse(req.query.cc);
   console.log(l_countries)
   countries.insertMany(l_countries, function(error, docs) {
@@ -108,10 +118,7 @@ app.get('/insCountries/:cc', (req, res, next) => {
 
 app.post('/createUser', (req, res, next) => {
 
-  console.log(req.body);
   let l_user = new user(JSON.parse(req.body.courseJSON));
-  console.log(req.body);
-  // res.send('test');
   l_user.save(function (err) {
     console.log('saved');
     res.send('User Added Succesfully');
@@ -120,17 +127,15 @@ app.post('/createUser', (req, res, next) => {
 });
 
 app.post('/login',cors(),(req,res)=>{
-  console.log(JSON.parse(req.body.courseJSON))
   var l_user = new course(JSON.parse(req.body.courseJSON));
   user.find(JSON.parse(req.body.courseJSON),{email:1,name:2,role:3},function (err, data) {
-    console.log(data);
     if (err) return console.error(err);
     if(data.length){
       var user={email:data[0].email,role:data[0].role}
       jwt.sign(user,'secret',
       // {expiresIn:60},
       (err,token)=>{
-        res.status(200).json(token);
+        res.status(200).json(token+data[0].role);
       })
      }
     else res.send('User Name/Password Incorrect');
@@ -149,7 +154,6 @@ app.post('/upload', (req, res, next) => {
   }
 
   var l_course = new course(JSON.parse(req.body.courseJSON));
-
   l_course.save(function (err) {
     console.log('saved');
     res.send('Course Added Succesfully');
@@ -164,6 +168,15 @@ app.post('/getCountries',(req,res)=>{
       res.send(data);
   });
 });
+
+app.get('/getCountry/:country',(req,res)=>{
+  countries.find({Country:req.params.country},function (err, data) {
+    if (err) return console.error(err);
+      res.send(data);
+  });
+});
+
+
 app.get('/getCourses',(req,res)=>{
   course.find({},{courseName:1,category:2},function (err, data) {
     if (err) return console.error(err);
@@ -179,14 +192,14 @@ app.get('/getUsers',(req,res)=>{
 });
 
 app.get('/delUser/:id',(req,res)=>{
-  user.remove({_id:req.params.id},function (err, data) {
+  user.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
 });
 
-app.get('/delCourse/:id',(req,res)=>{
-  course.remove({_id:req.params.id},function (err, data) {
+app.post('/delCourse/:id',(req,res)=>{
+  course.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
@@ -205,11 +218,6 @@ app.get('/db',(req,res)=>{
 
   var l_course = new course({ name: 'Node JS',syllabus:'Syllabus',details:'Details' });
 
-  // l_course.save(function (err) {
-  //   console.log('saved');
-  //   res.send(err);
-  // });
-  // find/querying the document
   course.find(function (err, data) {
     if (err) return console.error(err);
       res.send(data);
@@ -234,12 +242,37 @@ app.get('/api/:token',(req,res)=>{
   res.send(decoded);
 })
 
+app.get('/getMeta/:key',(req,res)=>{
+  const googleTrends = require('google-trends-api');
+
+  let keys=req.params.key.split(','),result=keys;
+  let tick=0;
+
+  for(let idx in keys){
+    googleTrends.relatedQueries({keyword: keys[idx]})
+    .then(function(results){
+      tick++;
+      results=JSON.parse(results)
+      var keywords=[];
+      for(i in results.default.rankedList)
+        {
+        k=results.default.rankedList[i].rankedKeyword;
+        for(i in k) keywords.push(k[i].query)
+        }
+      result=[...new Set([...result ,...keywords])]
+      if(tick==keys.length) res.send(result.join(', '));
+    })
+    .catch(function(err){
+      console.error('Oh no there was an error', err);
+    });
+  }
+});
+
 app.get('/api/protected', ensureToken, (req, res) =>{
 
   jwt.verify(req.token, 'secret', function(err, data) {
     var token=req.token;
     var decoded = jwt.decode(token);
-    console.log(decoded);
 
     if (err) {
       res.sendStatus(403);
@@ -250,6 +283,8 @@ app.get('/api/protected', ensureToken, (req, res) =>{
     }
   });
 });
+
+
 
 function ensureToken(req, res, next) {
 
