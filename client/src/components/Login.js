@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import env from './env.json';
 import axios from 'axios';
 import {Input,Alert} from 'reactstrap'
 import { connect } from 'react-redux'
@@ -25,7 +25,7 @@ class Login extends Component {
     // data.append('filename', this.fileName.value);
     data.append('courseJSON',JSON.stringify(courseJSON));
 
-      axios.post('/login', data)
+      axios.post(env.img+'/login', data)
         .then(function (response) {
           if(response.data!=='User Name/Password Incorrect'){
             localStorage.setItem('token', response.data);

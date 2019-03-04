@@ -25,24 +25,28 @@ class CourseComp extends Component {
       }
     ];
     this.state = { Questions:Questions,course: true,title:true,details:false,syllabus:false,FAQ:true,batch:true,reviews:false,meta:{description: 'I am a description, and I can create multiple tags',canonical: 'http://example.com/path/to/page',meta: {charset: 'utf-8',name: {keywords: ''}}}};
-    this.getCourse();
   }
+	componentDidMount(){this.getCourse();}
   componentDidUpdate(prevProps, prevState, snapshot){
     if(prevProps.match.params.course!==this.props.match.params.course) this.getCourse();
   }
   meta = {description: 'I am a description, and I can create multiple tags',canonical: 'http://example.com/path/to/page',meta: {charset: 'utf-8',name: {keywords: ''}}};
-  getCourse(){
-    axios('/getCourse/'+this.props.match.params.course)
+  getCourse=()=>{
+	  if('undefined'==this.props.match.params.course) return;
+	  console.log(this.props.match.params.course);
+    axios(env.img+'/getCourse/'+this.props.match.params.course)
     .then(res=>{
+	    console.log(res);
     this.meta['title']=this.state.course.title;
     this.meta['meta'].name.keywords=this.state.course.keywords;
     this.meta['meta'].description=this.state.course.courseDetails;
     this.setState({course:res.data[0],meta:this.meta});
     console.log(this.state.course.keywords);
-    axios('/getMeta/'+this.state.course.title)
+    axios(env.img+'/getMeta/'+this.state.course.title)
     .then(res1=>{this.meta['meta'].name.keywords=res1.data;this.setState({meta:this.meta});});
   });
   }
+
 
   toggle=()=> {this.setState({modal: !this.state.modal});}
 

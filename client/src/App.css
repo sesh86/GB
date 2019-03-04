@@ -8,21 +8,11 @@
   border: 1px solid black;
   background-image: none;
 }
-.carousel-control-next-icon:after
-{
-  content: '>';
-  font-size: 55px;
-  color: red;
-}
+.carousel-control-next-icon,.carousel-control-prev-icon{background-color:black !important}
 
 .input{width:100%}
 .dropdown-item .active{color:#336699;background-color:white}
 
-.carousel-control-prev-icon:after {
-  content: '<';
-  font-size: 55px;
-  color: red;
-}
 .App {
   text-align: center;
 }

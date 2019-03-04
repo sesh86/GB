@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import {mapDispatchCourseList} from '../reducers/actions'
 import Authenticate from './Authenticate';
 import axios from 'axios';
-
+import env from './env.json';
 class EnquiryDetails extends Component {
     constructor(props) {
       super(props);
       Authenticate(this);
       this.state={enquiry:{},comments:[{date:'21 Jan 2019',comment:'Call next week'},{'date':'25th Jan 2019',comment:'Will come tomorrow'}]}
       let curr=this;
-      axios.post('/getEnquiry/'+this.props.match.params.mobile)
+      axios.post(env.img+'/getEnquiry/'+this.props.match.params.mobile)
       .then(res=>{
         console.log(res);
         curr.setState({enquiry:res.data[0]})

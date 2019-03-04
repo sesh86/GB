@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import env from './env.json';
 import axios from 'axios';
 import {Input,Alert} from 'reactstrap'
 import { connect } from 'react-redux'
@@ -23,7 +23,7 @@ class CreateUser extends Component {
     // data.append('filename', this.fileName.value);
     data.append('courseJSON',JSON.stringify(courseJSON));
 
-      axios.post('/createUser', data)
+      axios.post(env.img+'/createUser', data)
         .then(function (response) {
             console.log(response.data)
           }

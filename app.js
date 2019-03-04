@@ -101,14 +101,14 @@ app.post('/getEnquiries',cors(),(req,res)=>{
   });
 });
 
-app.post('/delEnquiry/:id',(req,res)=>{
+app.post('/delEnquiry/:id',cors(),(req,res)=>{
   enquiry.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
 });
 
-app.get('/insCountries/:cc', (req, res, next) => {
+app.get('/insCountries/:cc',cors(), (req, res, next) => {
   let l_countries = JSON.parse(req.query.cc);
   console.log(l_countries)
   countries.insertMany(l_countries, function(error, docs) {
@@ -116,7 +116,7 @@ app.get('/insCountries/:cc', (req, res, next) => {
   });
 });
 
-app.post('/createUser', (req, res, next) => {
+app.post('/createUser', cors(),(req, res, next) => {
 
   let l_user = new user(JSON.parse(req.body.courseJSON));
   l_user.save(function (err) {
@@ -143,7 +143,7 @@ app.post('/login',cors(),(req,res)=>{
 });
 
 
-app.post('/upload', (req, res, next) => {
+app.post('/upload', cors(),(req, res, next) => {
 
   let fileName=req.files.file.name
   let imageFile = req.files.file;
@@ -162,14 +162,14 @@ app.post('/upload', (req, res, next) => {
   });
 
 })
-app.post('/getCountries',(req,res)=>{
+app.post('/getCountries',cors(),(req,res)=>{
   countries.find(function (err, data) {
     if (err) return console.error(err);
       res.send(data);
   });
 });
 
-app.get('/getCountry/:country',(req,res)=>{
+app.get('/getCountry/:country',cors(),(req,res)=>{
   countries.find({Country:req.params.country},function (err, data) {
     if (err) return console.error(err);
       res.send(data);
@@ -177,44 +177,43 @@ app.get('/getCountry/:country',(req,res)=>{
 });
 
 
-app.get('/getCourses',(req,res)=>{
+app.get('/getCourses',cors(),(req,res)=>{
   course.find({},{courseName:1,category:2},function (err, data) {
     if (err) return console.error(err);
       res.send(data);
   });
 });
 
-app.get('/getUsers',(req,res)=>{
+app.get('/getUsers',cors(),(req,res)=>{
   user.find({},function (err, data) {
     if (err) return console.error(err);
       res.send(data);
   });
 });
 
-app.get('/delUser/:id',(req,res)=>{
+app.get('/delUser/:id',cors(),(req,res)=>{
   user.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
 });
 
-app.post('/delCourse/:id',(req,res)=>{
+app.post('/delCourse/:id',cors(),(req,res)=>{
   course.deleteMany({_id:req.params.id},function (err, data) {
     if (err) return console.error(err);
       res.send('Succesfully deleted');
   });
 });
 
-app.get('/getCourse/:course',(req,res)=>{
+app.get('/getCourse/:course',cors(),(req,res)=>{
   course.find({courseName:req.params.course},function (err, data) {
     if (err) return console.error(err);
       // res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
       res.send(data);
   });
 });
 
-app.get('/db',(req,res)=>{
+app.get('/db',cors(),(req,res)=>{
 
   var l_course = new course({ name: 'Node JS',syllabus:'Syllabus',details:'Details' });
 
@@ -227,7 +226,7 @@ app.get('/db',(req,res)=>{
 
 
 )
-app.get('/',(req,res)=>{
+app.get('/',cors(),(req,res)=>{
   var user={id:1,user:'sesh'}
   jwt.sign(user,'secret',
   // {expiresIn:60},
@@ -237,12 +236,12 @@ app.get('/',(req,res)=>{
   })
 });
 
-app.get('/api/:token',(req,res)=>{
+app.get('/api/:token',cors(),(req,res)=>{
   var decoded = jwt.decode(req.params.token);
   res.send(decoded);
 })
 
-app.get('/getMeta/:key',(req,res)=>{
+app.get('/getMeta/:key',cors(),(req,res)=>{
   const googleTrends = require('google-trends-api');
 
   let keys=req.params.key.split(','),result=keys;

@@ -5,6 +5,7 @@ import { NavLink} from 'react-router-dom';
 import { connect } from 'react-redux'
 import {mapDispatchHome} from '../reducers/actions'
 import axios from 'axios';
+import env from './env.json';
 class Category extends Component {
   constructor(props) {
     super(props);
@@ -20,14 +21,14 @@ class Category extends Component {
     if(prevProps.match.params.cat!==this.props.match.params.cat) this.getCategory();
   }
   getCategory(){
-    axios.post('/getCategory/'+this.props.match.params.cat)
+    axios.post(env.img+'/getCategory/'+this.props.match.params.cat)
     .then(res=>{
       this.setState({courses:res.data});
       let cat=this.props.match.params.cat;
       cat=cat.replace(/-/g," ")
       this.meta['title']=cat;
       this.meta['meta'].name.keywords=cat;
-      axios('/getMeta/'+cat)
+      axios(env.img+'/getMeta/'+cat)
       .then(res1=>{this.meta['meta'].name.keywords=res1.data;this.setState({meta:this.meta});});
     })
   }
@@ -45,7 +46,7 @@ class Category extends Component {
         {courses?this.state.courses.map((item,index) =>(
           <Card key={index} className="widget">
           <CardHeader className="">
-            <CardTitle><NavLink title={"Check "+item.courseName} className="text" to={"/Course/"+item.courseName}><img alt={item.courseName} src={'http://localhost:8080'+item.logo} height="200"/></NavLink></CardTitle>
+            <CardTitle><NavLink title={"Check "+item.courseName} className="text" to={"/Course/"+item.courseName}><img alt={item.courseName} src={env.img+item.logo} height="200"/></NavLink></CardTitle>
           </CardHeader>
           <CardBody>
             <div className="text-center text"><NavLink title={"Check "+item.courseName} className="text" to={"/Course/"+item.courseName}>{item.courseName}</NavLink></div>

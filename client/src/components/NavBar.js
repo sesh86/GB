@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import env from './env.json';
 import { connect } from 'react-redux'
 import {mapDispatchCountries} from '../reducers/actions'
-
 class NavBar extends Component {
   componentDidMount(){this.props.getCountries();this.props.getCategories();}
 
@@ -20,7 +19,7 @@ class NavBar extends Component {
     .then(
         function success(response) {
             console.log('User\'s Country', response.data.country);
-            axios('/getCountry/'+response.data.country)
+            axios(env.img+'/getCountry/'+response.data.country)
                 .then(function success(res) {
                   curr.props.setCountry(res.data[0])
                   curr.props.setCurrencyRate(res.data[0].Currency)

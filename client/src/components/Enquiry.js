@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Alert,Input,Modal,ModalHeader,ModalBody,Button,ModalFooter} from 'reactstrap';
-
+import env from './env.json';
 import axios from 'axios';
 class Enquiry extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Enquiry extends Component {
     }
     const data = new FormData();
     data.append('enquiry',JSON.stringify(courseJSON));
-      axios.post('/quickEnquiry', data)
+      axios.post(env.img+'/quickEnquiry', data)
         .then(function (response) {
           currentComponent.toggle();
           currentComponent.toggle1();

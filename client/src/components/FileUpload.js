@@ -1,7 +1,7 @@
 import React,{ Component } from 'react';
 import axios from 'axios';
 class FileUpload extends Component {
-
+import env from './env.json';
   constructor(props) {
     super(props);
       this.state = {
@@ -21,7 +21,7 @@ class FileUpload extends Component {
     data.append('check','test');
     console.log(this.uploadInput.files[0])
     console.log(data);
-    axios.post('http://localhost:8080/upload', data)
+    axios.post(env.img+'/upload', data)
       .then(function (response) {
         console.log(response)
     this.setState({ imageURL: '', uploadStatus: true });

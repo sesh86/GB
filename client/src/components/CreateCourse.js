@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import env from './env.json';
 import axios from 'axios';
 import Authenticate from './Authenticate';
 import {Input} from 'reactstrap'
@@ -20,7 +20,7 @@ class CreateCourse extends Component {
       isOpen: false
     };
     if(this.props.location.pathname!=='/CreateCourse'){
-      axios('/getCourse/'+this.props.match.params.param)
+      axios(env.img+'/getCourse/'+this.props.match.params.param)
       .then(res=>{
         this.setState({
         course:res.data[0],
@@ -63,7 +63,7 @@ class CreateCourse extends Component {
     data.append('courseJSON',JSON.stringify(courseJSON));
     if(this.props.location.pathname==='/CreateCourse'){
 
-      axios.post('/upload', data)
+      axios.post(env.img+'/upload', data)
         .then(function (response) {
           currentComponent.setState({ imageURL: '', uploadStatus: true });
           currentComponent.props.history.push('/CourseList');
@@ -73,7 +73,7 @@ class CreateCourse extends Component {
         });
     }
     else{
-      axios.post('/update', data)
+      axios.post(env.img+'/update', data)
         .then(function (response) {
           currentComponent.setState({ imageURL: '', uploadStatus: true });
           currentComponent.props.history.push('/Course/'+currentComponent.props.match.params.param);
