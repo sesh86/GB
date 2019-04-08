@@ -24,7 +24,7 @@ class CourseComp extends Component {
         show:false
       }
     ];
-    this.state = { Questions:Questions,course: true,title:true,details:false,syllabus:false,FAQ:true,batch:true,reviews:false,meta:{description: 'I am a description, and I can create multiple tags',canonical: 'http://example.com/path/to/page',meta: {charset: 'utf-8',name: {keywords: ''}}}};
+    this.state = { Questions:Questions,course: true,title:true,details:true,syllabus:false,FAQ:false,batch:true,reviews:false,meta:{description: 'I am a description, and I can create multiple tags',canonical: 'http://example.com/path/to/page',meta: {charset: 'utf-8',name: {keywords: ''}}}};
   }
 	componentDidMount(){this.getCourse();}
   componentDidUpdate(prevProps, prevState, snapshot){
@@ -40,6 +40,8 @@ class CourseComp extends Component {
     this.meta['title']=this.state.course.title;
     this.meta['meta'].name.keywords=this.state.course.keywords;
     this.meta['meta'].description=this.state.course.courseDetails;
+    this.meta.description=res.data[0].description;
+
     this.setState({course:res.data[0],meta:this.meta});
     console.log(this.state.course.keywords);
     axios(env.img+'/getMeta/'+this.state.course.title)
@@ -58,7 +60,7 @@ class CourseComp extends Component {
   toggleQuestions=(id) =>{let Q=this.state.Questions;Q[id].show=!Q[id].show;this.setState({ Questions: Q });console.log(Q)}
   toggleReviews=() =>{this.setState({ reviews: !this.state.reviews });}
   getCurrency=()=>{return this.props.state.country?this.props.state.country.Currency+' ':'';}
-  getCourseFee=(fee)=>{return this.props.state.country?Math.round(Number(this.props.state.country.rate)*fee):''}
+  getCourseFee=(fee)=>{return fee;return this.props.state.country?Math.round(Number(this.props.state.country.rate)*fee):''}
   render() {
       document.title =this.state.course.title;
       // document.getElementsByTagName("META")[2].content=this.state.course.keywords;
@@ -99,7 +101,7 @@ class CourseComp extends Component {
           <br/>
           <Card>
           <CardHeader onClick={this.toggleCourse} className="bg-darkblue">
-            <CardTitle>  <span className="p-1 h5">{course.courseName}</span><span className="float-right">{title?'-':'+'}</span></CardTitle>
+            <CardTitle>  <span className="p-1 h5">{course.courseName?course.courseName.replace(/-/g," "):''}</span><span className="float-right">{title?'-':'+'}</span></CardTitle>
           </CardHeader>
           <Collapse isOpen={title}>
           <CardBody>
@@ -111,13 +113,17 @@ class CourseComp extends Component {
             </div>
               <div className="col-md-4">
                   <div className="text-center">
+	      	  {
+		  course.demo?
                   <iframe title="Demo" width="300" height="170" src={course.demo+'?controls=0&modestbranding=1'} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+			  :''
+		  }
                   </div>
               </div>
               <div className="col-md-4">
                   <div className="bd-contrast text-center p-3">
-                    <b>Learn in Live Classroom</b><br/><br/>
-                    <span className={course.disc?'strike':''}>{this.getCurrency()+this.getCourseFee(course.fee)}</span> {course.disc?this.getCurrency()+this.getCourseFee(course.disc):''}
+                    <b>Learn in Live Classroom</b><br/><br/><span>INR</span>
+                    <span className={course.disc?'strike':''}>{this.getCourseFee(course.fee)}</span> {course.disc?this.getCurrency()+this.getCourseFee(course.disc):''}
                     <br/>
                     <br/>
                     <Button color="darkblue" onClick={this.toggle}>Enroll Now</Button>
@@ -126,7 +132,7 @@ class CourseComp extends Component {
             </div>
             <br/>
             <div className="row">
-              <div className="col-md-3"><div className=" bg-darkblue m-1 p-3"><b>Course Duration:</b><br/>{course.duration} Days</div></div>
+              <div className="col-md-3"><div className=" bg-darkblue m-1 p-3"><b>Course Duration:</b><br/>{course.duration} </div></div>
               <div className="col-md-3"><div className="bg-contrast m-1 p-3"><b>Learning Material:</b><br/>{course.lms}</div></div>
             <div className="col-md-3"><div className="bg-darkblue m-1 p-3"><b>Live Project:</b><br/>{course.liveProject}</div></div>
               <div className="col-md-3"><div className="bg-contrast m-1 p-3"><b>Pre Requisites:</b><br/>{course.preRequisites}</div></div>
@@ -152,6 +158,25 @@ class CourseComp extends Component {
               </CardBody>
               </Collapse>
             </Card>
+          <Card>
+            <CardHeader onClick={this.toggleDetails} className="bg-darkblue">
+              <CardTitle>Course Details<span className="float-right">{this.state.details?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.details}>
+            <CardBody className="text-justify"><div dangerouslySetInnerHTML={{ __html: course.courseDetails}} /></CardBody>
+            </Collapse>
+          </Card>
+
+          <Card>
+            <CardHeader onClick={this.toggleSyllabus} className="bg-darkblue">
+              <CardTitle>Course Syllabus<span className="float-right">{this.state.syllabus?'-':'+'}</span></CardTitle>
+            </CardHeader>
+            <Collapse isOpen={this.state.syllabus}>
+            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: course.syllabus}} >
+
+            </CardBody>
+            </Collapse>
+          </Card>
             <Card>
               <CardHeader onClick={()=>{this.toggleFAQ()}} className="bg-darkblue">
                 <CardTitle>FAQ<span className="float-right">{this.state.FAQ?'-':'+'}</span></CardTitle>
@@ -174,37 +199,8 @@ class CourseComp extends Component {
 
               </CardBody>
               </Collapse>
-            </Card>            
-          <Card>
-            <CardHeader onClick={this.toggleDetails} className="bg-darkblue">
-              <CardTitle>Course Details<span className="float-right">{this.state.details?'-':'+'}</span></CardTitle>
-            </CardHeader>
-            <Collapse isOpen={this.state.details}>
-            <CardBody className="text-justify"><div dangerouslySetInnerHTML={{ __html: course.courseDetails}} /></CardBody>
-            </Collapse>
-          </Card>
+            </Card>
 
-          <Card>
-            <CardHeader onClick={this.toggleSyllabus} className="bg-darkblue">
-              <CardTitle>Course Syllabus<span className="float-right">{this.state.syllabus?'-':'+'}</span></CardTitle>
-            </CardHeader>
-            <Collapse isOpen={this.state.syllabus}>
-            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: course.syllabus}} >
-
-            </CardBody>
-            </Collapse>
-          </Card>
-
-
-          <Card>
-            <CardHeader onClick={this.toggleReviews} className="bg-darkblue">
-              <CardTitle>Reviews<span className="float-right">{this.state.reviews?'-':'+'}</span></CardTitle>
-            </CardHeader>
-            <Collapse isOpen={this.state.reviews}>
-            <CardBody className="text-justify" dangerouslySetInnerHTML={{ __html: course.reviews}} >
-            </CardBody>
-            </Collapse>
-          </Card>
           </div>
           <Enquiry curr={this} countries={this.props.state.countries}/>
         </div>

@@ -22,7 +22,7 @@ class NavBar extends Component {
             axios(env.img+'/getCountry/'+response.data.country)
                 .then(function success(res) {
                   curr.props.setCountry(res.data[0])
-                  curr.props.setCurrencyRate(res.data[0].Currency)
+		// curr.props.setCurrencyRate(res.data[0].Currency)
             })
         });
   }

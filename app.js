@@ -1,8 +1,11 @@
 var mongoose=require('mongoose');
 var cors=require('cors');
-mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
+//mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 
-var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String,demo:String,fee:Number,disc:Number,title:String,keywords:String});
+mongoose.connect('mongodb://admin:adminUser123@localhost:27017/test');
+
+
+var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String,demo:String,fee:Number,disc:Number,title:String,keywords:String,description:String});
 let user = mongoose.model('users', { email: String, password:String, gender:String,  mobile:String, courseIntersted:String,role:Number,country:String });
 let countries = mongoose.model('countries', { Country:String,ISO:String,Phone:String,Currency:String});
 let enquiry = mongoose.model('enquiry', { name:String,email: String, country:String,mobile:String, course:String,assignedTo:String,comments:Object,followup:Date,batch:String,location:String,planToStart:String});
@@ -226,7 +229,7 @@ app.get('/db',cors(),(req,res)=>{
 
 
 )
-app.get('/',cors(),(req,res)=>{
+app.get('/',(req,res)=>{
   var user={id:1,user:'sesh'}
   jwt.sign(user,'secret',
   // {expiresIn:60},

@@ -125,3 +125,25 @@ a:hover{text-decoration:none}
 
 .hstrike:hover{text-decoration: line-through !important}
 .active{color: #fff;background-color: #286090;border-color: #204d74;}
+.et_pb_blurb_content {
+  position: relative;
+  max-width: 550px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h4.et_pb_module_header
+{
+  color: #007c9d!important;
+  text-align: center;
+}
+
+#slider2{border:1px solid rgba(0,0,0,.03)}
+
+.btn-outline-darkblue {
+  color: #007c9d;
+  background-color: transparent;
+  background-image: none;
+  border-color: #007c9d;
+}
+.white{background-color:white}

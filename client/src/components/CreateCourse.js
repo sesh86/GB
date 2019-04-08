@@ -51,7 +51,7 @@ class CreateCourse extends Component {
     let currentComponent = this;
 
     for(let i in ev.target.elements){
-      if(ev.target.elements[i].value!==undefined && ev.target.elements[i].value!=="")
+      if(ev.target.elements[i].value!==undefined && ev.target.elements[i].name!=='logo')
         courseJSON[ev.target.elements[i].name]=ev.target.elements[i].value;
     }
     const data = new FormData();
@@ -103,13 +103,15 @@ class CreateCourse extends Component {
         <br/>
         <h1>Create New Course</h1>
         <form onSubmit={this.onSubmit}>
+	    <button className="form-control btn btn-darkblue">Submit</button>
           <div className="form-group">
           Course Name<Input type="text" name="courseName"  className="form-control" defaultValue={this.state.course?this.state.course.courseName:''}/>
           Category   <Input type="text" name="category"    className="form-control" defaultValue={this.state.course?this.state.course.category:''}/>
           Demo URL   <Input type="text" name="demo"    className="form-control" defaultValue={this.state.course?this.state.course.demo:''}/>
         Title   <Input type="text" name="title"    className="form-control" defaultValue={this.state.course?this.state.course.title:''}/>
       Keywords   <Input type="text" name="keywords"    className="form-control" defaultValue={this.state.course?this.state.course.keywords:''}/>
-      Course Fee   <Input type="number" name="fee"    className="form-control" defaultValue={this.state.course?this.state.course.fee:''}/>
+      Description   <Input type="text" name="description"    className="form-control" defaultValue={this.state.course?this.state.course.description:''}/>
+	    Course Fee   <Input type="number" name="fee"    className="form-control" defaultValue={this.state.course?this.state.course.fee:''}/>
     Discounted Fee   <Input type="number" name="disc"    className="form-control" defaultValue={this.state.course?this.state.course.disc:''}/>
           Course Details
                       <Editor name="courseRich"
@@ -170,7 +172,7 @@ class CreateCourse extends Component {
           <input id="sesh" type="file" name="logo" className="form-control form-control-file" ref={(ref) => { this.uploadInput = ref; }} />
           <br/>
           <br/>
-          <button className="form-control btn btn-success">Submit</button>
+          <button className="form-control btn btn-darkblue">Submit</button>
           </div>
         </form>
       </div>

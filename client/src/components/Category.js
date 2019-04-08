@@ -16,7 +16,7 @@ class Category extends Component {
   }
   meta = {description: 'I am a description, and I can create multiple tags',canonical: 'http://example.com/path/to/page',meta: {charset: 'utf-8',name: {keywords: ''}}};
   getCurrency=()=>{return this.props.state.country?this.props.state.country.Currency+' ':'';}
-  getCourseFee=(fee)=>{return this.props.state.country?Math.round(Number(this.props.state.country.rate)*fee):''}
+  getCourseFee=(fee)=>{return 'INR '+fee;return this.props.state.country?Math.round(Number(this.props.state.country.rate)*fee):''}
   componentDidUpdate(prevProps, prevState, snapshot){
     if(prevProps.match.params.cat!==this.props.match.params.cat) this.getCategory();
   }

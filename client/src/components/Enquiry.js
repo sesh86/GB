@@ -43,8 +43,8 @@ class Enquiry extends Component {
     let curr=this.props.curr;
     return(
        <div>
-            <Button color="info" onClick={curr.toggle}>Enquiry</Button>
-            <Modal isOpen={this.state.modal} toggle={curr.toggle} className={curr.props.className}>
+            <button className="btn btn-outline-darkblue white" onClick={curr.toggle}>Book a Demo with us</button>
+	    <Modal isOpen={this.state.modal} toggle={curr.toggle} className={curr.props.className}>
               <ModalHeader toggle={curr.toggle}>Quick Enquiry</ModalHeader>
               <ModalBody>
                       <form onSubmit={this.onSubmit}>
