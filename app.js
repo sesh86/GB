@@ -1,8 +1,8 @@
 var mongoose=require('mongoose');
 var cors=require('cors');
-//mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
+mongoose.connect('mongodb://sesh:sesh.1234@cluster0-shard-00-00-lemrd.mongodb.net:27017,cluster0-shard-00-01-lemrd.mongodb.net:27017,cluster0-shard-00-02-lemrd.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin');
 
-mongoose.connect('mongodb://admin:adminUser123@localhost:27017/test');
+// mongoose.connect('mongodb://admin:adminUser123@localhost:27017/test');
 
 
 var course = mongoose.model('courses', { courseDetails: String, courseName:String,  duration:String,  liveProject:String,  lms:String,  logo:String,  preRequisites:String,  syllabus:String, batch:String,FAQ:String,reviews:String,category:String,demo:String,fee:Number,disc:Number,title:String,keywords:String,description:String});
@@ -299,6 +299,6 @@ function ensureToken(req, res, next) {
   }
 }
 
-app.listen(_app.port);
+app.listen(process.env.PORT||_app.port);
 
 console.log('Application is running on http://localhost:'+ _app.port);
